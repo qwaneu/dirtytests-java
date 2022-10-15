@@ -29,7 +29,7 @@ public class ArgumentCaptorsTest {
         var event = invoiceDao.recordedEvent;
         assertThat(event, instanceOf(InvoiceCreatedEvent.class));
         assertThat(event.getId(), is(UUID_UT));
-        assertThat(event.getCreatedAt(), is(not(nullValue())));
+        assertThat(event.getCreatedAt(), is(NOW));
         assertThat(((InvoiceCreatedEvent)event).getAmountDue(), is(20000.0));
         assertThat(((InvoiceCreatedEvent)event).getServices().size(), is(2));
         assertThat(((InvoiceCreatedEvent)event).getAmounts().size(), is(2));
@@ -46,7 +46,7 @@ public class ArgumentCaptorsTest {
         var event = invoiceDao.recordedEvent;
         assertThat(event, instanceOf(InvoiceCreatedEvent.class));
         assertThat(event.getId(), is(UUID_UT));
-        assertThat(event.getCreatedAt(), is(not(nullValue())));
+        assertThat(event.getCreatedAt(), is(NOW));
         assertThat(((InvoiceCreatedEvent)event).getAmountDue(), is(27000.0));
         assertThat(((InvoiceCreatedEvent)event).getServices().size(), is(3));
         assertThat(((InvoiceCreatedEvent)event).getAmounts().size(), is(3));
