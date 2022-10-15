@@ -54,4 +54,11 @@ public class ArgumentCaptorsTest {
         service.execute("recipient", new ArrayList<>());
         verify(invoiceDao, times(0)).insert(any());
     }
+
+    class FakeInvoiceDao implements InvoiceDao {
+        @Override
+        public void insert(InvoiceEvent event) {
+
+        }
+    }
 }
