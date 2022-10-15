@@ -14,7 +14,8 @@ public class ArgumentCaptorsTest {
 
     RecordingInvoiceDao invoiceDao = new RecordingInvoiceDao();
     UUIDGenerator uuidGenerator = new StaticUUIDGenerator(UUID_UT);
-    InvoiceService service = new InvoiceService(invoiceDao, uuidGenerator);
+    Clock clock = new LocalClock();
+    InvoiceService service = new InvoiceService(invoiceDao, uuidGenerator, clock);
 
     @Test
     public void testExecute() {

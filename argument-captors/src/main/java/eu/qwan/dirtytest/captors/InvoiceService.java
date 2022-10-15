@@ -11,11 +11,12 @@ public class InvoiceService {
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceService.class);
     private final InvoiceDao invoiceDao;
     private final UUIDGenerator uuidGenerator;
-    private final Clock clock = new Clock() {};
+    private final Clock clock;
 
-    public InvoiceService(InvoiceDao invoiceDao, UUIDGenerator uuidGenerator) {
+    public InvoiceService(InvoiceDao invoiceDao, UUIDGenerator uuidGenerator, Clock clock) {
         this.invoiceDao = invoiceDao;
         this.uuidGenerator = uuidGenerator;
+        this.clock = clock;
     }
 
     public void execute(String recipient, List<InvoiceLine> invoiceLines) {
