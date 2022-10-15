@@ -13,10 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ArgumentCaptorsTest {
+
+    RecordingInvoiceDao invoiceDao = new RecordingInvoiceDao();
+    InvoiceService service = new InvoiceService();
+
     @Test
     public void testExecute() {
-        var invoiceDao = new RecordingInvoiceDao();
-        InvoiceService service = new InvoiceService();
 
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0)));
@@ -32,9 +34,6 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testDiscount() {
-        var invoiceDao = new RecordingInvoiceDao();
-        InvoiceService service = new InvoiceService();
-
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0), new InvoiceLine("mentoring", 10000.0)));
 
@@ -49,16 +48,13 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testExecuteNoEvent() {
-        var invoiceDao = spy(new RecordingInvoiceDao());
-        InvoiceService service = new InvoiceService();
-
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", new ArrayList<>());
 
         assertNull(invoiceDao.recordedEvent);
     }
 
-    class RecordingInvoiceDao implements InvoiceDao {
+    static class RecordingInvoiceDao implements InvoiceDao {
         InvoiceEvent recordedEvent;
 
         @Override
