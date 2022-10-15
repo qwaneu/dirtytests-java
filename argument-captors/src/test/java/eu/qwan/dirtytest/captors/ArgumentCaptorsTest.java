@@ -15,12 +15,12 @@ import static org.mockito.Mockito.*;
 public class ArgumentCaptorsTest {
     @Test
     public void testExecute() {
-        var invoiceDao = spy(new RecordingInvoiceDao());
+        var invoiceDao = new RecordingInvoiceDao();
         InvoiceService service = new InvoiceService();
+
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0)));
-        ArgumentCaptor<InvoiceEvent> captor = ArgumentCaptor.forClass(InvoiceEvent.class);
-        verify(invoiceDao).insert(captor.capture());
+
         InvoiceEvent event = invoiceDao.recordedEvent;
         assertTrue(event instanceof InvoiceCreatedEvent);
         assertThat(event.getId(), is(not(nullValue())));
@@ -32,12 +32,12 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testDiscount() {
-        var invoiceDao = spy(new RecordingInvoiceDao());
+        var invoiceDao = new RecordingInvoiceDao();
         InvoiceService service = new InvoiceService();
+
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0), new InvoiceLine("mentoring", 10000.0)));
-        ArgumentCaptor<InvoiceEvent> captor = ArgumentCaptor.forClass(InvoiceEvent.class);
-        verify(invoiceDao).insert(captor.capture());
+
         InvoiceEvent event = invoiceDao.recordedEvent;
         assertTrue(event instanceof InvoiceCreatedEvent);
         assertThat(event.getId(), is(not(nullValue())));
@@ -51,9 +51,10 @@ public class ArgumentCaptorsTest {
     public void testExecuteNoEvent() {
         var invoiceDao = spy(new RecordingInvoiceDao());
         InvoiceService service = new InvoiceService();
+
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", new ArrayList<>());
-        verify(invoiceDao, times(0)).insert(any());
+
         assertNull(invoiceDao.recordedEvent);
     }
 
