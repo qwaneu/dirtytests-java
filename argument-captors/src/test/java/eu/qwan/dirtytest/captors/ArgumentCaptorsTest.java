@@ -19,7 +19,7 @@ public class ArgumentCaptorsTest {
             new InvoiceLine("training", 5000.0)
         ));
 
-        InvoiceEvent event = invoiceDao.recordedEvent;
+        var event = invoiceDao.recordedEvent;
         assertThat(event, instanceOf(InvoiceCreatedEvent.class));
         assertThat(event.getId(), is(not(nullValue())));
         assertThat(event.getCreatedAt(), is(not(nullValue())));
@@ -36,7 +36,7 @@ public class ArgumentCaptorsTest {
             new InvoiceLine("mentoring", 10000.0)
         ));
 
-        InvoiceEvent event = invoiceDao.recordedEvent;
+        var event = invoiceDao.recordedEvent;
         assertThat(event, instanceOf(InvoiceCreatedEvent.class));
         assertThat(event.getId(), is(not(nullValue())));
         assertThat(event.getCreatedAt(), is(not(nullValue())));
