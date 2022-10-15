@@ -11,6 +11,7 @@ public class InvoiceService {
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceService.class);
     private final InvoiceDao invoiceDao;
     private final UUIDGenerator uuidGenerator;
+    private final Clock clock = new Clock() {};
 
     public InvoiceService(InvoiceDao invoiceDao, UUIDGenerator uuidGenerator) {
         this.invoiceDao = invoiceDao;
@@ -29,7 +30,7 @@ public class InvoiceService {
             if (total > 20000) total = total * 0.9;
             InvoiceCreatedEvent event = new InvoiceCreatedEvent(
                 uuidGenerator.generate().toString(),
-                LocalDateTime.now(),
+                clock.getNow(),
                 "Agile Training & Coaching Inc.",
                 recipient,
                 "EU12345678",
