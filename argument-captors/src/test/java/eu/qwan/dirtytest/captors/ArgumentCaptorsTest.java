@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 public class ArgumentCaptorsTest {
     @Test
     public void testExecute() {
-        InvoiceDao invoiceDao = mock(InvoiceDao.class);
+        InvoiceDao invoiceDao = mock(FakeInvoiceDao.class);
         InvoiceService service = new InvoiceService();
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0)));
@@ -31,7 +31,7 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testDiscount() {
-        InvoiceDao invoiceDao = mock(InvoiceDao.class);
+        InvoiceDao invoiceDao = mock(FakeInvoiceDao.class);
         InvoiceService service = new InvoiceService();
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0), new InvoiceLine("mentoring", 10000.0)));
@@ -48,7 +48,7 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testExecuteNoEvent() {
-        InvoiceDao invoiceDao = mock(InvoiceDao.class);
+        InvoiceDao invoiceDao = mock(FakeInvoiceDao.class);
         InvoiceService service = new InvoiceService();
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", new ArrayList<>());
