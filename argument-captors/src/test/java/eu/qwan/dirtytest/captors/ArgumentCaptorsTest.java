@@ -8,19 +8,20 @@ import java.util.ArrayList;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ArgumentCaptorsTest {
     @Test
     public void testExecute() {
-        InvoiceDao invoiceDao = spy(new FakeInvoiceDao());
+        var invoiceDao = spy(new FakeInvoiceDao());
         InvoiceService service = new InvoiceService();
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0)));
         ArgumentCaptor<InvoiceEvent> captor = ArgumentCaptor.forClass(InvoiceEvent.class);
         verify(invoiceDao).insert(captor.capture());
-        InvoiceEvent event = captor.getValue();
+        InvoiceEvent event = invoiceDao.recordedEvent;
         assertTrue(event instanceof InvoiceCreatedEvent);
         assertThat(event.getId(), is(not(nullValue())));
         assertThat(event.getCreatedAt(), is(not(nullValue())));
@@ -31,13 +32,13 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testDiscount() {
-        InvoiceDao invoiceDao = spy(new FakeInvoiceDao());
+        var invoiceDao = spy(new FakeInvoiceDao());
         InvoiceService service = new InvoiceService();
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0), new InvoiceLine("mentoring", 10000.0)));
         ArgumentCaptor<InvoiceEvent> captor = ArgumentCaptor.forClass(InvoiceEvent.class);
         verify(invoiceDao).insert(captor.capture());
-        InvoiceEvent event = captor.getValue();
+        InvoiceEvent event = invoiceDao.recordedEvent;
         assertTrue(event instanceof InvoiceCreatedEvent);
         assertThat(event.getId(), is(not(nullValue())));
         assertThat(event.getCreatedAt(), is(not(nullValue())));
@@ -48,11 +49,12 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testExecuteNoEvent() {
-        InvoiceDao invoiceDao = spy(new FakeInvoiceDao());
+        var invoiceDao = spy(new FakeInvoiceDao());
         InvoiceService service = new InvoiceService();
         service.setInvoiceDao(invoiceDao);
         service.execute("recipient", new ArrayList<>());
         verify(invoiceDao, times(0)).insert(any());
+        assertNull(invoiceDao.recordedEvent);
     }
 
     class FakeInvoiceDao implements InvoiceDao {
