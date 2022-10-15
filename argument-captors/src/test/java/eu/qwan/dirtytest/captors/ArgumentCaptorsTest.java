@@ -56,9 +56,11 @@ public class ArgumentCaptorsTest {
     }
 
     class FakeInvoiceDao implements InvoiceDao {
+        InvoiceEvent recordedEvent;
+
         @Override
         public void insert(InvoiceEvent event) {
-
+            recordedEvent = event;
         }
     }
 }
