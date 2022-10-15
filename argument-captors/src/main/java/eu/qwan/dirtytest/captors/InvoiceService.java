@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public class InvoiceService {
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceService.class);
-    private InvoiceDao invoiceDao;
+    private final InvoiceDao invoiceDao;
 
-    public void setInvoiceDao(InvoiceDao invoiceDao) {
+    public InvoiceService(InvoiceDao invoiceDao) {
         this.invoiceDao = invoiceDao;
     }
 

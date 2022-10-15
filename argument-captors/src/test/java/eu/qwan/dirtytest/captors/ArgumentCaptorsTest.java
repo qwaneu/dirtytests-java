@@ -16,11 +16,10 @@ import static org.mockito.Mockito.*;
 public class ArgumentCaptorsTest {
 
     RecordingInvoiceDao invoiceDao = new RecordingInvoiceDao();
-    InvoiceService service = new InvoiceService();
+    InvoiceService service = new InvoiceService(invoiceDao);
 
     @Test
     public void testExecute() {
-        service.setInvoiceDao(invoiceDao);
         service.execute("recipient", List.of(
             new InvoiceLine("consulting", 15000.0),
             new InvoiceLine("training", 5000.0)
@@ -37,7 +36,6 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testDiscount() {
-        service.setInvoiceDao(invoiceDao);
         service.execute("recipient", List.of(
             new InvoiceLine("consulting", 15000.0),
             new InvoiceLine("training", 5000.0),
@@ -55,7 +53,6 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testExecuteNoEvent() {
-        service.setInvoiceDao(invoiceDao);
         service.execute("recipient", List.of());
 
         assertNull(invoiceDao.recordedEvent);
