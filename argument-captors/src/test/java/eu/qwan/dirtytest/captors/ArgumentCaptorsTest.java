@@ -10,8 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ArgumentCaptorsTest {
 
+    private static final String UUID_UT = "c6356c33-6a4f-4bda-8141-1e78041e35a4";
+
     RecordingInvoiceDao invoiceDao = new RecordingInvoiceDao();
-    UUIDGenerator uuidGenerator = new StaticUUIDGenerator();
+    UUIDGenerator uuidGenerator = new StaticUUIDGenerator(UUID_UT);
     InvoiceService service = new InvoiceService(invoiceDao, uuidGenerator);
 
     @Test
@@ -23,7 +25,7 @@ public class ArgumentCaptorsTest {
 
         var event = invoiceDao.recordedEvent;
         assertThat(event, instanceOf(InvoiceCreatedEvent.class));
-        assertThat(event.getId(), is(not(nullValue())));
+        assertThat(event.getId(), is(UUID_UT));
         assertThat(event.getCreatedAt(), is(not(nullValue())));
         assertThat(((InvoiceCreatedEvent)event).getAmountDue(), is(20000.0));
         assertThat(((InvoiceCreatedEvent)event).getServices().size(), is(2));
@@ -40,7 +42,7 @@ public class ArgumentCaptorsTest {
 
         var event = invoiceDao.recordedEvent;
         assertThat(event, instanceOf(InvoiceCreatedEvent.class));
-        assertThat(event.getId(), is(not(nullValue())));
+        assertThat(event.getId(), is(UUID_UT));
         assertThat(event.getCreatedAt(), is(not(nullValue())));
         assertThat(((InvoiceCreatedEvent)event).getAmountDue(), is(27000.0));
         assertThat(((InvoiceCreatedEvent)event).getServices().size(), is(3));
@@ -65,9 +67,15 @@ public class ArgumentCaptorsTest {
 
     static class StaticUUIDGenerator implements UUIDGenerator {
 
+        private final UUID uuid;
+
+        public StaticUUIDGenerator(String uuid) {
+            this.uuid = UUID.fromString(uuid);
+        }
+
         @Override
         public UUID generate() {
-            return UUID.fromString("c6356c33-6a4f-4bda-8141-1e78041e35a4");
+            return uuid;
         }
     }
 }
