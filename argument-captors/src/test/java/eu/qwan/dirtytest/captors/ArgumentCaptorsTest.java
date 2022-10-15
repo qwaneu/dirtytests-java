@@ -1,5 +1,6 @@
 package eu.qwan.dirtytest.captors;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -11,10 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class ArgumentCaptorsTest {
 
     private static final String UUID_UT = "c6356c33-6a4f-4bda-8141-1e78041e35a4";
+    private static final LocalDateTime NOW = LocalDateTime.now();
 
     RecordingInvoiceDao invoiceDao = new RecordingInvoiceDao();
     UUIDGenerator uuidGenerator = new StaticUUIDGenerator(UUID_UT);
-    Clock clock = new LocalClock();
+    Clock clock = new StoppedClock(NOW);
     InvoiceService service = new InvoiceService(invoiceDao, uuidGenerator, clock);
 
     @Test
@@ -77,6 +79,20 @@ public class ArgumentCaptorsTest {
         @Override
         public UUID generate() {
             return uuid;
+        }
+    }
+
+    static class StoppedClock implements Clock {
+
+        private final LocalDateTime now;
+
+        public StoppedClock(LocalDateTime now) {
+            this.now = now;
+        }
+
+        @Override
+        public LocalDateTime getNow() {
+            return now;
         }
     }
 }
