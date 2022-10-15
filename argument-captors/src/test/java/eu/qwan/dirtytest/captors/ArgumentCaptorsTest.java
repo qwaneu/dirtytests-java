@@ -1,5 +1,6 @@
 package eu.qwan.dirtytest.captors;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -19,9 +20,11 @@ public class ArgumentCaptorsTest {
 
     @Test
     public void testExecute() {
-
         service.setInvoiceDao(invoiceDao);
-        service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0)));
+        service.execute("recipient", List.of(
+            new InvoiceLine("consulting", 15000.0),
+            new InvoiceLine("training", 5000.0)
+        ));
 
         InvoiceEvent event = invoiceDao.recordedEvent;
         assertTrue(event instanceof InvoiceCreatedEvent);
@@ -35,7 +38,11 @@ public class ArgumentCaptorsTest {
     @Test
     public void testDiscount() {
         service.setInvoiceDao(invoiceDao);
-        service.execute("recipient", asList(new InvoiceLine("consulting", 15000.0), new InvoiceLine("training", 5000.0), new InvoiceLine("mentoring", 10000.0)));
+        service.execute("recipient", List.of(
+            new InvoiceLine("consulting", 15000.0),
+            new InvoiceLine("training", 5000.0),
+            new InvoiceLine("mentoring", 10000.0)
+        ));
 
         InvoiceEvent event = invoiceDao.recordedEvent;
         assertTrue(event instanceof InvoiceCreatedEvent);
@@ -49,7 +56,7 @@ public class ArgumentCaptorsTest {
     @Test
     public void testExecuteNoEvent() {
         service.setInvoiceDao(invoiceDao);
-        service.execute("recipient", new ArrayList<>());
+        service.execute("recipient", List.of());
 
         assertNull(invoiceDao.recordedEvent);
     }
