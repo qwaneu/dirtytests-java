@@ -2,16 +2,10 @@ package eu.qwan.dirtytest.captors;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 
-import java.util.ArrayList;
-
-import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
 public class ArgumentCaptorsTest {
 
@@ -26,7 +20,7 @@ public class ArgumentCaptorsTest {
         ));
 
         InvoiceEvent event = invoiceDao.recordedEvent;
-        assertTrue(event instanceof InvoiceCreatedEvent);
+        assertThat(event, instanceOf(InvoiceCreatedEvent.class));
         assertThat(event.getId(), is(not(nullValue())));
         assertThat(event.getCreatedAt(), is(not(nullValue())));
         assertThat(((InvoiceCreatedEvent)event).getAmountDue(), is(20000.0));
@@ -43,7 +37,7 @@ public class ArgumentCaptorsTest {
         ));
 
         InvoiceEvent event = invoiceDao.recordedEvent;
-        assertTrue(event instanceof InvoiceCreatedEvent);
+        assertThat(event, instanceOf(InvoiceCreatedEvent.class));
         assertThat(event.getId(), is(not(nullValue())));
         assertThat(event.getCreatedAt(), is(not(nullValue())));
         assertThat(((InvoiceCreatedEvent)event).getAmountDue(), is(27000.0));
