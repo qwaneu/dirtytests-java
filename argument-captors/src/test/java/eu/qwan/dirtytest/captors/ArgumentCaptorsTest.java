@@ -1,6 +1,7 @@
 package eu.qwan.dirtytest.captors;
 
 import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -10,7 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class ArgumentCaptorsTest {
 
     RecordingInvoiceDao invoiceDao = new RecordingInvoiceDao();
-    InvoiceService service = new InvoiceService(invoiceDao);
+    UUIDGenerator uuidGenerator = new StaticUUIDGenerator();
+    InvoiceService service = new InvoiceService(invoiceDao, uuidGenerator);
 
     @Test
     public void testExecute() {
@@ -58,6 +60,14 @@ public class ArgumentCaptorsTest {
         @Override
         public void insert(InvoiceEvent event) {
             recordedEvent = event;
+        }
+    }
+
+    static class StaticUUIDGenerator implements UUIDGenerator {
+
+        @Override
+        public UUID generate() {
+            return UUID.fromString("c6356c33-6a4f-4bda-8141-1e78041e35a4");
         }
     }
 }

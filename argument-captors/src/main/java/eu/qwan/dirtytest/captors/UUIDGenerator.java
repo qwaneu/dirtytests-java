@@ -2,9 +2,8 @@ package eu.qwan.dirtytest.captors;
 
 import java.util.UUID;
 
-public class UUIDGenerator {
+@FunctionalInterface
+public interface UUIDGenerator {
 
-    String generateUUID() {
-        return UUID.randomUUID().toString();
-    }
+    UUID generate();
 }
