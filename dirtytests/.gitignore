@@ -1,0 +1,9 @@
+.idea/
+target/
+*.iml
+.project
+.classpath
+.settings
+bin
+reports
+donstro/remote.secrets

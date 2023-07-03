@@ -1,0 +1,7 @@
+bin
+target
+reports
+.settings
+.idea
+*.iml
+donstro/remote.secrets

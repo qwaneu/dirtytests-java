@@ -7,7 +7,8 @@ tracks goods transported by road,
 from factories via distribution centres to warehouses and shops.
 
 This test focuses on the transfer of a shipment of
-goods (Transport) delivered at a distribution centre. A carrier needs to be
+goods (Transport) delivered at a distribution centre. A carrier
+(a transport company that operates a number of trucks) needs to be
 assigned to the shipment. A carrier will take care of transporting the
 shipment to the next stop.
 
@@ -30,12 +31,10 @@ only the related production code.
 
 ## Exercise
 
-Refactor and restructure these tests so that they become clear,
-focused, and intention revealing.
+Refactor these tests so that they become clear, focused, and intention revealing.
 
-- As a start, make a diagram of the different classes, interfaces and
-their dependencies.
-- Which different concerns does the test try to cover?
+- Make a diagram of the classes, interfaces and dependencies.
+- Which different concerns do the tests try to cover?
+- What is the impact of the way mocks are used?
 - How can you improve the common setup code?
-- What does the test tell you about the design of the production code and its
-dependencies?
+- What do the tests tell you about the design of the production code and dependencies?

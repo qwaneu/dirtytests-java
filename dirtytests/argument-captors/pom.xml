@@ -10,18 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>misplaced-mocks</artifactId>
+    <artifactId>argument-captors</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <properties>
-      <maven.compiler.source>11</maven.compiler.source>
-      <maven.compiler.target>11</maven.compiler.target>
-    </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
-        </dependency>
-    </dependencies>
 </project>
